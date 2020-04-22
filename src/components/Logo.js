@@ -6,7 +6,7 @@ import lumino from './lumino.png';
 class Logo extends Component {
   render() {
     return (
-      <div className="ma4 mt0 center">
+      <div className="ma4 mt5 center">
         <Tilt
           className="Tilt br2 shadow-2 center"
           options={{ max: 45 }}

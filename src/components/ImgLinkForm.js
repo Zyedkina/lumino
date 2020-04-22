@@ -8,7 +8,7 @@ const ImgLinkForm = ({onChangeURL, onSubmit}) => {
           <div className='center'>
               <div className='nice pa4 br3 center shadow-5'>
                   <input type='text' className='w-70 f4 pa2 center'
-                    placeholder='Enter your image link'
+                    placeholder='Enter image (png or jpg) link'
                     onChange={onChangeURL}
                   />
                   <button onClick={onSubmit} className='fontRS w-30 grow f4 link ph3 pv2' style={{ borderColor: "grey", backgroundColor: "#F17D16" }}>Detect</button>
