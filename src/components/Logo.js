@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Logo.css";
 import Tilt from "react-tilt";
-import lumino from './lumino.png';
+import lumino from './lumino03.png';
 
 class Logo extends Component {
   render() {

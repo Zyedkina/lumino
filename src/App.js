@@ -5,7 +5,7 @@ import Particles from "react-particles-js";
 import Logo from './components/Logo';
 import FaceRecognition from './components/FaceRecognition';
 import ImgLinkForm from './components/ImgLinkForm';
-import Rank from './components/Rank';
+//import Rank from './components/Rank';
 //const Clarifai = require('clarifai');
 import Clarifai from 'clarifai';
 
@@ -29,11 +29,23 @@ class App extends Component {
     this.state = {
       input: '',
       imgURL : '',
-      box: {} 
+      box: {},
+      Gender: ''
     };
   }
 
   calFaceBox = (response) => {
+    console.log(response);
+    let val = response.outputs[0].data.regions[0].data.concepts[20].name;
+    console.log(val);
+    if (val === "masculine") {
+      val = "Gender: Male";
+    } else if (val === "feminine") {
+      val = "Gender: Female";
+    }
+    let p = document.getElementById("genderP");
+    p.innerHTML = val;
+    this.setState({Gender: val});
     const cal = response.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('image');
     const width = Number(image.width);
@@ -58,15 +70,23 @@ class App extends Component {
   onSubmit = () => {
     this.setState((state) => ({
       imgURL: state.input,
-      box: {}
+      box: {},
+      Gender: ''
     }));
-    app.models.predict("a403429f2ddf4b49b307e318f00e528b", this.state.input)
+    let p = document.getElementById("genderP");
+    p.innerHTML = "Waiting...";
+    app.models.predict("c0c0ac362b03416da06ab3fa36fb58e3", this.state.input)
       .then( response => this.displayFaceBox(this.calFaceBox(response)))
-      .catch(err => console.log("Error Baby :( ", err));
+      .catch(err => {
+        console.log("Error Baby :( ", err);
+        let p = document.getElementById("genderP");
+        p.innerHTML = "Sorry, Can't Detect Gender";
+      });
   }
 
   render() {
     let imgURL = this.state.imgURL;
+    let gender = this.state.Gender;
     return (
       <div className="App">
         <Particles className='particles' params={param}/>
@@ -83,37 +103,3 @@ class App extends Component {
 }
 
 export default App;
-
-    // app.models.predict(Clarifai.COLOR_MODEL,
-    // // URL
-    //   "https://samples.clarifai.com/metro-north.jpg")
-    //   .then(function(response) {
-    //     // do something with responseconsole.log(response);
-
-    //     },
-    //     function(err) {// there was an error
-
-    //     }
-    //   );
-
-    // app.models.predict("a403429f2ddf4b49b307e318f00e528b",this.state.input)
-    // .then(
-    //   response => {
-    //     let res = response.outputs[0].data.regions;
-    //     console.log("app ",res);
-
-    //     const cal = res[0].region_info.bounding_box;
-    //     const image = document.getElementById('image');
-    //     const width = Number(image.width);
-    //     const height = Number(image.height);
-    //     let boxF = {
-    //       leftCol: cal.left_col * width,
-    //       topRow: cal.top_row * height,
-    //       rightCol: width - (cal.right_col * width),
-    //       bottomRow: height - (cal.bottom_row * height)
-    //     };
-    //     console.log(boxF);
-    //     this.setState({ box: boxF });
-    //     console.log("boxbox ",this.state.box);
-    //   })
-    //   .catch (err => console.log("Error Baby :( ", err));
