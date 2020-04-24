@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/lumino/precache-manifest.9408b791e750247bc5ff949ba19f2f40.js"
+  "/lumino/precache-manifest.242e10eb27d918cdf536bf657f7e4d00.js"
 );
 
 self.addEventListener('message', (event) => {
